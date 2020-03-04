@@ -15,15 +15,13 @@ upload_destination = ""
 port = 0
 
 def client_sender(buffer):
-
     client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 
     try:
         #connect to our target host
         client.connect((target,port))
-       
         if len(buffer):
-            client.send(buffer)
+            client.send(buffer.encode('utf-8'))
 
         while True:
 
@@ -35,24 +33,24 @@ def client_sender(buffer):
 
                 data = client.recv(4096)
                 recv_len = len(data)
-                response += data
+                response += data.decode('utf-8')
 
                 if recv_len < 4096:
                     break
 
             print(response,)
-
+            
             # wait for more input 
 
-            buffer = raw_input("")
+            buffer = input("")
             buffer += "\n"
 
             #send it off
-            client.send(buffer)
+            client.send(buffer.encode('utf-8'))
 
-    except:
+    except Exception as e:
         print("[*] Exception! Exiting.")
-
+        print(e)
         #tear down the connection
         client.close()
 
@@ -124,9 +122,9 @@ def client_handler(client_socket):
                 file_descriptor.close()
  
                 #acknowledge file written
-                client_socket.send("Successfully saved file to %s\r\n" % upload_destination)
+                client_socket.send(b"Successfully saved file to %s\r\n" % upload_destination)
             except:
-                client_socket.send("Failed to save file to %s\r\n" % upload_destination)
+                client_socket.send(b"Failed to save file to %s\r\n" % upload_destination)
  
  
     if len(execute):
@@ -140,9 +138,7 @@ def client_handler(client_socket):
     # now go into another loop if command shell requested
 
     if command:
-
         while True:
-
             # show a simple prompt
             client_socket.send(b"<BHP:#> ")
 
@@ -150,7 +146,9 @@ def client_handler(client_socket):
 
             cmd_buffer = ""
             while "\n" not in cmd_buffer:
-                cmd_buffer += client_socket.recv(1024)
+                response_string = client_socket.recv(1024)
+                response_string = response_string.decode("utf-8")
+                cmd_buffer += response_string
 
             # send back the command output
 
@@ -159,11 +157,6 @@ def client_handler(client_socket):
             #send back the response
 
             client_socket.send(response)
-
-
-         
-
-            
 
 
 
@@ -232,7 +225,6 @@ def main():
         # to stdin
         
         buffer = sys.stdin.read()
-        
         #send data off
         client_sender(buffer)
 
