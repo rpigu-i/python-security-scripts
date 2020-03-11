@@ -5,7 +5,6 @@ import threading
 import subprocess
 
 # define some global vars
-
 listen = False
 command = False
 upload = False
@@ -24,13 +23,11 @@ def client_sender(buffer):
             client.send(buffer.encode('utf-8'))
 
         while True:
-
             # now wait 
             recv_len = 1
             response = ""
   
             while recv_len:
-
                 data = client.recv(4096)
                 recv_len = len(data)
                 response += data.decode('utf-8')
@@ -41,7 +38,6 @@ def client_sender(buffer):
             print(response,)
             
             # wait for more input 
-
             buffer = input("")
             buffer += "\n"
 
@@ -66,14 +62,11 @@ def server_loop():
 
     server = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     server.bind((target,port))
-
     server.listen(5)
 
     while True:
         client_socket, addr = server.accept()
-
         # spin off a thread to handle our new client
-
         client_thread = threading.Thread(target=client_handler, args=(client_socket,))
         client_thread.start()
 
@@ -81,15 +74,12 @@ def run_command(command):
 
     # trim the newline
     command = command.rstrip()
-
     # run the command and get the output back
     try:
         output = subprocess.check_output(command, stderr=subprocess.STDOUT, shell=True)
     except:
         output = "Failed to execute command.\r\n"
-
     # send the output back to the client
-
     return output
 
 def client_handler(client_socket):
@@ -105,7 +95,6 @@ def client_handler(client_socket):
         file_buffer = ""
         
         #keep reading the data until none is available
-
         while True:
             data = client_socket.recv(1024)
             
@@ -116,22 +105,17 @@ def client_handler(client_socket):
 
             #now try and write the bytes out
             try:
- 
                 file_descriptor = open(upload_destination, "wb")
                 file_descriptor.write(file_buffer)
                 file_descriptor.close()
- 
                 #acknowledge file written
                 client_socket.send(b"Successfully saved file to %s\r\n" % upload_destination)
             except:
                 client_socket.send(b"Failed to save file to %s\r\n" % upload_destination)
  
- 
     if len(execute):
-
         # run the command
         output = run_command(execute)
-        
         client_socket.send(output)
 
 
@@ -141,9 +125,7 @@ def client_handler(client_socket):
         while True:
             # show a simple prompt
             client_socket.send(b"<BHP:#> ")
-
             # now receive until line feed
-
             cmd_buffer = ""
             while "\n" not in cmd_buffer:
                 response_string = client_socket.recv(1024)
@@ -151,14 +133,9 @@ def client_handler(client_socket):
                 cmd_buffer += response_string
 
             # send back the command output
-
             response = run_command(cmd_buffer)
-
             #send back the response
-
             client_socket.send(response)
-
-
 
 def usage():
 
@@ -169,10 +146,8 @@ def usage():
     print("-e --execute=file_to_run - execute the given file upon receiving a connection")
     print("-c --command - initialize a command shell")
     print("-u --upload=destination - upon receiving connection upload a file and write to [destination]")
-    
     print(" ")
     print(" ")
-    
     print("Examples: ")
     print("bhpnet.py -t 192.168.0.1. -p 5555 -l -c")  
     print("bhpnet.py -t 192.168.0.1. -p 5555 -l -u=c:\\target.exe")
@@ -219,11 +194,9 @@ def main():
 
     # are we going to listen or just send data from stdin?
     if not listen and len(target) and port > 0:
-
         # read in the buffer from the commandline
         # this will blovk, so send CTRL-D if not sending input
         # to stdin
-        
         buffer = sys.stdin.read()
         #send data off
         client_sender(buffer)
