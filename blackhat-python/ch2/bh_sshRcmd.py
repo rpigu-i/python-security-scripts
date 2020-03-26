@@ -27,6 +27,6 @@ def ssh_command(ip, user, passwd, command, keys):
     return
 
 
-ssh_command('192.168.1.1', 'admin', 'admin', 'id', False)
+ssh_command('localhost', 'admin', 'admin', 'id', False)
 
      

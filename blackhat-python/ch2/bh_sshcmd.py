@@ -2,7 +2,7 @@ import threading
 import paramiko
 import subprocess
 
-def ssh_command(ip, user, passwd, command, keys):
+def ssh_command(ip, user, passwd, command, keys, port):
 
     client = paramiko.SSHClient()
 
@@ -10,7 +10,7 @@ def ssh_command(ip, user, passwd, command, keys):
         client.load_host_keys(keys)
     
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(ip, username=user, password=passwd)
+    client.connect(ip, port, username=user, password=passwd)
     ssh_session = client.get_transport().open_session()
 
     if ssh_session.active:
@@ -19,6 +19,6 @@ def ssh_command(ip, user, passwd, command, keys):
     return
 
 
-ssh_command('192.168.1.1', 'admin', 'admin', 'id', False)
+ssh_command('localhost', 'admin', 'admin', 'id', False, '5000')
 
      
