@@ -25,3 +25,9 @@ See the following Stack overflow post on changing the struct to
 accomodate the packet size on a 32 versus 64 bit system:
 
 https://stackoverflow.com/questions/29306747/python-sniffing-from-black-hat-python-book/29307402
+
+
+## sniffer_with_icmp.py
+
+Same as sniffer_ip_header_decode.py but decodes ICMP headers too.
+
