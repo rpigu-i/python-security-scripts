@@ -31,3 +31,6 @@ https://stackoverflow.com/questions/29306747/python-sniffing-from-black-hat-pyth
 
 Same as sniffer_ip_header_decode.py but decodes ICMP headers too.
 
+## scanner.py
+
+Builds on sniffer_with_icmp.py to include scanning for hosts on a subnet
