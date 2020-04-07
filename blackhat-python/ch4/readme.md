@@ -18,3 +18,23 @@ and dump the details to the console
 
 Sniffs traffic to POP3 (110), IMAP (143) and SMTP (25)
 
+
+## arper.py
+
+ARP poisoning script. Produces a PCACP dump.
+
+Start by allowing forwarding e.g.
+
+Mac:
+```
+sudo sysctl -w net.inet.ip.forwarding=1
+```
+
+'Nix:
+
+```
+echo 1 > /proc/sys/net/ipv4/ip_forward
+```
+
+
+
