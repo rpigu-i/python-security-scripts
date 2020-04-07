@@ -34,3 +34,10 @@ Same as sniffer_ip_header_decode.py but decodes ICMP headers too.
 ## scanner.py
 
 Builds on sniffer_with_icmp.py to include scanning for hosts on a subnet
+
+Install netaddr with pip3:
+
+```
+pip3 install netaddr
+```
+
