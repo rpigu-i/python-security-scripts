@@ -36,5 +36,11 @@ sudo sysctl -w net.inet.ip.forwarding=1
 echo 1 > /proc/sys/net/ipv4/ip_forward
 ```
 
+##  pic_carver.py
 
+For cv2
+
+```
+pip3 install opencv-python
+```
 
