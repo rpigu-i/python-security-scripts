@@ -12,3 +12,7 @@ Python 3.
 ## The Hacker Playbook
 
 Interesting/useful scripts from the book
+
+## SAST Tools
+
+Useful scripts/examples related to Static Analysis in Python
