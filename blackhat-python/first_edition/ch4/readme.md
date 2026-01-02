@@ -44,3 +44,9 @@ For cv2
 pip3 install opencv-python
 ```
 
+Facial detection training file:
+
+```
+curl https://eclecti.cc/files/2008/03/haarcascade_frontalface_alt.xml -o haarcascade_frontalface_alt.xml
+```
+
